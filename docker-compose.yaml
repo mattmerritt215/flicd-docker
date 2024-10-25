@@ -1,0 +1,23 @@
+version: '3'
+services:
+  flicd:
+    build:
+      context: .
+      args:
+        - PLATFORM_ARCH=aarch64
+    container_name: flicd
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /var/lib/docker/volumes/flicd:/data
+    environment:
+      - HCI_DEV=hci0
+      - PORT=5551
+      - DB_NAME=flicd.db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: unless-stopped
